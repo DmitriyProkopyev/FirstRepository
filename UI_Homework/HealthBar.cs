@@ -22,11 +22,13 @@ public class HealthBar : MonoBehaviour
         _color = _image.color;
     }
 
+    // вызывается кнопкой
     public void Heal()
     {
         SetupUI(_slider.value + _healingValue);
     }
 
+    // вызывается кнопкой
     public void TakeDamage()
     {
         SetupUI(_slider.value - _damageValue);
