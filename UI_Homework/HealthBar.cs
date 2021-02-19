@@ -16,6 +16,7 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
+        _healthToShow.HealthChanged += OnHealthChanged;
         _slider = GetComponent<Slider>();
         _color = _image.color;
         _slider.maxValue = _healthToShow.MaxHealth;
@@ -26,10 +27,15 @@ public class HealthBar : MonoBehaviour
     {
         float health = _healthToShow.HealthValue;
         float maxHealth = _healthToShow.MaxHealth;
-        if (health > maxHealth || health < 0)
+        float normalizedHealth = health / maxHealth;
+        if (health <= 0)
+        {
+            _healthToShow.HealthChanged -= OnHealthChanged;
+            return;
+        }
+        if (health > maxHealth)
             return;
 
-        float normalizedHealth = health / maxHealth;
         _image.DOColor(Color.Lerp(Color.red, Color.green, normalizedHealth), _changingDuration);
         _slider.DOValue(health, _changingDuration);
     }
