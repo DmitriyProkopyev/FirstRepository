@@ -9,6 +9,12 @@ public class Health : MonoBehaviour
     [SerializeField] private float _maxHealth;
     [SerializeField] private UnityEvent _healthChanged;
 
+    public event UnityAction HealthChanged
+    {
+        add => _healthChanged.AddListener(value);
+        remove => _healthChanged.RemoveListener(value);
+    }
+
     public float HealthValue => _health;
     public float MaxHealth => _maxHealth;
 
